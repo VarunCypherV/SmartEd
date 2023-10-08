@@ -56,18 +56,6 @@ export default function FileUploadTestScreen() {
     }
   };
 
-  const fetchDataFromServer = async () => {
-    try {
-      console.log('Response from /simpleMongoDBcrud:', response);
-      const serverResponse = await axios.get(
-        'http://192.168.1.101:3001/simpletextresponse' // Correct the URL
-      );
-      console.log('Response from /simpleMongoDBcrud:', serverResponse.data);
-    } catch (error) {
-      console.error('Error fetching data from server:', error);
-    }
-  };
-
   return (
     <View style={{ flex: 1, justifyContent: 'center' }}>
       {selectedImage && (
@@ -79,10 +67,6 @@ export default function FileUploadTestScreen() {
 
       <View style={{ marginTop: 20 }}>
         <Button title="Upload" onPress={uploadImage} />
-      </View>
-
-      <View style={{ marginTop: 20 }}>
-        <Button title="Fetch Data from Server" onPress={fetchDataFromServer} />
       </View>
     </View>
   );
