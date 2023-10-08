@@ -8,10 +8,9 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
-const corsOrigin = 'http://localhost:3000';
+const corsOrigin = 'http://192.168.1.101:3000';
 app.use(cors({
   origin:[corsOrigin],
   methods:['GET','POST'],
@@ -31,6 +30,7 @@ db.on('error', (error) => {
 // ======================BASIC NO BACKEND=====================
 
 app.get("/simpletextresponse", (req, res) => {
+  console.log("received");
   res.send("hi");
 });
 
@@ -54,6 +54,7 @@ app.route("/SimpleCRUDMongoDB")
   try {
     const logins = await Login.find();
     res.status(200).json(logins);
+
   } catch (error) {
     console.error("Error fetching logins:", error);
     res.status(500).json({ error: "Internal server error" });
