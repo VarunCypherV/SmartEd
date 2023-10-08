@@ -3269,7 +3269,7 @@
   "resolved" "https://registry.npmjs.org/depd/-/depd-2.0.0.tgz"
   "version" "2.0.0"
 
-"deprecated-react-native-prop-types@4.1.0":
+"deprecated-react-native-prop-types@^4.0.0", "deprecated-react-native-prop-types@4.1.0":
   "integrity" "sha512-WfepZHmRbbdTvhcolb8aOKEvQdcmTMn5tKLbqbXmkBvjFjRVWAYqsXk/DBsV8TZxws8SdGHLuHaJrHSQUPRdfw=="
   "resolved" "https://registry.npmjs.org/deprecated-react-native-prop-types/-/deprecated-react-native-prop-types-4.1.0.tgz"
   "version" "4.1.0"
@@ -6662,6 +6662,14 @@
   "integrity" "sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w=="
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-18.2.0.tgz"
   "version" "18.2.0"
+
+"react-native-flip-card@^3.5.7":
+  "integrity" "sha512-++ePtVn+4vICWaBUhNpVMa/g6ZdLFl77vabWAFqfO7yyVmpyhs4CEZvkZUBxs30IRShqWsqSpmhgVCmP5AYfQw=="
+  "resolved" "https://registry.npmjs.org/react-native-flip-card/-/react-native-flip-card-3.5.7.tgz"
+  "version" "3.5.7"
+  dependencies:
+    "deprecated-react-native-prop-types" "^4.0.0"
+    "prop-types" "^15.8.1"
 
 "react-native-gesture-handler@^2.13.1", "react-native-gesture-handler@>= 1.0.0":
   "integrity" "sha512-hW454X7sjuiBN+lobqw63pmT3boAmTl5OP6zQLq83iEe4T6PcHZ9lxzgCrebtgmutY8cJfq9rM2dOUVh9WBcww=="
