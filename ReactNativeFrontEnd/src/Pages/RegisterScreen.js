@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Text,
   View,
-  Alert,
   TextInput,
   TouchableOpacity,
   StyleSheet,
@@ -10,13 +9,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default function LoginScreen() {
-
-  const handleLogin = () =>{
-    Alert.alert("whohoo")
-  }
-
-
+export default function RegisterScreen() {
   return (
     <View style={styles.parent}>
       <LinearGradient colors={['#FF4500', '#FF7B1C']} style={styles.container1}>
@@ -60,10 +53,20 @@ export default function LoginScreen() {
 
       <View style={styles.container2Wrapper}>
         <View style={styles.container2}>
-          <Text style={styles.headerText}>Login</Text>
+          <Text style={styles.headerText}>Register</Text>
           <TextInput
             style={styles.input}
-            placeholder="Username or Email"
+            placeholder="Name"
+            placeholderTextColor="#888"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="DOB"
+            placeholderTextColor="#888"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Phone Number"
             placeholderTextColor="#888"
           />
           <TextInput
@@ -73,11 +76,11 @@ export default function LoginScreen() {
             secureTextEntry={true}
           />
           <View style={styles.buttonsparent}>
-            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-              <Text style={styles.buttonText}>Login</Text>
+            <TouchableOpacity style={styles.loginButton}>
+              <Text style={styles.buttonText}>Go Back</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.regButton}>
-              <Text style={styles.buttonText} onPress={handleLogin}>Register</Text>
+              <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -85,7 +88,7 @@ export default function LoginScreen() {
     </View>
   );
 }
-//STYLESHEET======================================================
+
 const styles = StyleSheet.create({
   parent: {
     flex: 1,
