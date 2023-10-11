@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { View, Text, Button, Image } from "react-native";
 import ViewShot from "react-native-view-shot";
 import axios from "axios";
+import DrawingCanvas3 from "../Components/DrawingCanvas3";
+
 
 function DrawScreen() {
   const [capturedImage, setCapturedImage] = useState(null);
@@ -48,8 +50,8 @@ function DrawScreen() {
   return (
     <View>
       <ViewShot ref={viewShotRef} options={{ format: "png", quality: 1 }}>
-        <View style={{ backgroundColor: "white" }}>
-          <Text>WOHOOOO</Text>
+      <View style={{ height:'90%',width:'100%', backgroundColor: "white" }}>
+            <DrawingCanvas3/>
         </View>
       </ViewShot>
       {capturedImage && (
