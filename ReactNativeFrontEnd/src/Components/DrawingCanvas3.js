@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-native';
-import { Svg, Path } from 'react-native-svg';
+import React, {useState, forwardRef} from 'react';
+import {
+  View,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
+import {Svg, Path} from 'react-native-svg';
 
-const { height, width } = Dimensions.get('window');
+const {height, width} = Dimensions.get('window');
 
-export default () => {
+const DrawingCanvas3 = React.forwardRef((props, ref) => {
   const [paths, setPaths] = useState([]);
   const [currentPath, setCurrentPath] = useState([]);
   const [isClearButtonClicked, setClearButtonClicked] = useState(false);
+
+  React.useImperativeHandle(ref, () => ({
+    handleClearButtonClick,
+  }));
 
   const onTouchEnd = () => {
     paths.push(currentPath);
@@ -15,11 +25,13 @@ export default () => {
     setClearButtonClicked(false);
   };
 
-  const onTouchMove = (event) => {
+  const onTouchMove = event => {
     const newPath = [...currentPath];
     const locationX = event.nativeEvent.locationX;
     const locationY = event.nativeEvent.locationY;
-    const newPoint = `${newPath.length === 0 ? 'M' : ''}${locationX.toFixed(0)},${locationY.toFixed(0)} `;
+    const newPoint = `${newPath.length === 0 ? 'M' : ''}${locationX.toFixed(
+      0,
+    )},${locationY.toFixed(0)} `;
     newPath.push(newPoint);
     setCurrentPath(newPath);
   };
@@ -32,7 +44,10 @@ export default () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.svgContainer} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
+      <View
+        style={styles.svgContainer}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}>
         <Svg height={height * 0.7} width={width}>
           <Path
             d={paths.join('')}
@@ -56,12 +71,9 @@ export default () => {
             ))}
         </Svg>
       </View>
-      <TouchableOpacity style={styles.clearButton} onPress={handleClearButtonClick}>
-        <Text style={styles.clearButtonText}>Clear</Text>
-      </TouchableOpacity>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -87,5 +99,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-  }
-})
+  },
+});
+
+export default DrawingCanvas3;
