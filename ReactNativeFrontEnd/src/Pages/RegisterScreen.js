@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -10,44 +10,74 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 
 export default function RegisterScreen() {
+
+  const [name, setName] = useState('');
+  const [dob, setDob] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleRegister = async () => {
+    try {
+      const response = await fetch('http://localhost:5050/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, dob, phoneNumber, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Alert.alert('Success', 'Registration successful!');
+        navigation.navigate('LoginScreen');
+      } else {
+        Alert.alert('Error', data);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+
   return (
     <View style={styles.parent}>
       <LinearGradient colors={['#FF4500', '#FF7B1C']} style={styles.container1}>
-      <View style={styles.textContainer}>
+        <View style={styles.textContainer}>
           <Text style={styles.sunsetText}>SmartEducation!</Text>
         </View>
-          <View style={styles.imagesParent}>
-            <View style={[styles.image, styles.image1]}>
-              <Image
-                source={require('../Assests/loginImages/p5.png')}
-                style={styles.image}
-              />
-            </View>
-            <View style={[styles.image, styles.image2]}>
-              <Image
-                source={require('../Assests/loginImages/p9.png')}
-                style={styles.image}
-              />
-            </View>
-            <View style={styles.image}>
-              <Image
-                source={require('../Assests/loginImages/p4.png')}
-                style={styles.image}
-              />
-            </View>
-            <View style={[styles.image, styles.image3]}>
-              <Image
-                source={require('../Assests/loginImages/p8.png')}
-                style={styles.image}
-              />
-            </View>
-            <View style={[styles.image, styles.image4]}>
-              <Image
-                source={require('../Assests/loginImages/p7.png')}
-                style={styles.image}
-              />
-            </View>
+        <View style={styles.imagesParent}>
+          <View style={[styles.image, styles.image1]}>
+            <Image
+              source={require('../Assests/loginImages/p5.png')}
+              style={styles.image}
+            />
           </View>
+          <View style={[styles.image, styles.image2]}>
+            <Image
+              source={require('../Assests/loginImages/p9.png')}
+              style={styles.image}
+            />
+          </View>
+          <View style={styles.image}>
+            <Image
+              source={require('../Assests/loginImages/p4.png')}
+              style={styles.image}
+            />
+          </View>
+          <View style={[styles.image, styles.image3]}>
+            <Image
+              source={require('../Assests/loginImages/p8.png')}
+              style={styles.image}
+            />
+          </View>
+          <View style={[styles.image, styles.image4]}>
+            <Image
+              source={require('../Assests/loginImages/p7.png')}
+              style={styles.image}
+            />
+          </View>
+        </View>
 
       </LinearGradient>
 
@@ -96,13 +126,13 @@ const styles = StyleSheet.create({
   },
   container1: {
     flex: 3,
-    justifyContent: 'flex-end', 
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   textContainer: {
-    flex: 1, 
-    justifyContent: 'center', 
-    alignItems: 'center', 
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   container2Wrapper: {
     flex: 4,
@@ -172,7 +202,7 @@ const styles = StyleSheet.create({
 
   imagesParent: {
     flexDirection: 'row',
-    justifyContent: 'center', 
+    justifyContent: 'center',
   },
   image: {
     maxWidth: 60,
@@ -183,27 +213,27 @@ const styles = StyleSheet.create({
     position: 'relative',
     top: '12%',
     marginRight: 15,
-    transform: [{rotate: '-50deg'}], 
+    transform: [{ rotate: '-50deg' }],
   },
 
   image2: {
     position: 'relative',
     top: '3%',
     marginRight: 15,
-    transform: [{rotate: '-10deg'}], 
+    transform: [{ rotate: '-10deg' }],
   },
 
   image3: {
     position: 'relative',
     top: '3%',
     marginLeft: 15,
-    transform: [{rotate: '15deg'}], 
+    transform: [{ rotate: '15deg' }],
   },
 
   image4: {
     position: 'relative',
     top: '12%',
-    transform: [{rotate: '180deg'}], 
+    transform: [{ rotate: '180deg' }],
     marginLeft: 15,
   },
 });
