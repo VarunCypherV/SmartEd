@@ -11,32 +11,32 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default function LoginScreen() {
-  const [usernameOrEmail, setUsernameOrEmail] = useState('');
-  const [password, setPassword] = useState('');
+const LoginScreen = (props) => {
+  // const [usernameOrEmail, setUsernameOrEmail] = useState('');
+  // const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
-    try {
-      const response = await fetch('http://localhost:5050/api/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ usernameOrEmail, password }),
-      });
+  // const handleLogin = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:5050/api/users/login', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ usernameOrEmail, password }),
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (response.ok) {
-        AsyncStorage.setItem('token', data.token);
-        navigation.navigate('HomeScreen');
-      } else {
-        Alert.alert('Error', data);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
+  //     if (response.ok) {
+  //       AsyncStorage.setItem('token', data.token);
+  //       navigation.navigate('HomeScreen');
+  //     } else {
+  //       Alert.alert('Error', data);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // };
 
   return (
     <View style={styles.parent}>
@@ -98,7 +98,7 @@ export default function LoginScreen() {
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.regButton}>
-              <Text style={styles.buttonText} onPress={handleLogin}>Register</Text>
+              <Text style={styles.buttonText} onPress={() => props.navigation.navigate("register")}>Register</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -225,3 +225,5 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
 });
+
+export default LoginScreen;

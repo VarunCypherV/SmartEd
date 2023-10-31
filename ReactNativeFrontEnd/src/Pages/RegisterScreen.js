@@ -9,35 +9,35 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default function RegisterScreen() {
+const RegisterScreen = (props) => {
 
-  const [name, setName] = useState('');
-  const [dob, setDob] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
+  // const [name, setName] = useState('');
+  // const [dob, setDob] = useState('');
+  // const [phoneNumber, setPhoneNumber] = useState('');
+  // const [password, setPassword] = useState('');
 
-  const handleRegister = async () => {
-    try {
-      const response = await fetch('http://localhost:5050/api/users/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, dob, phoneNumber, password }),
-      });
+  // const handleRegister = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:5050/api/users/register', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ name, dob, phoneNumber, password }),
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (response.ok) {
-        Alert.alert('Success', 'Registration successful!');
-        navigation.navigate('LoginScreen');
-      } else {
-        Alert.alert('Error', data);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
+  //     if (response.ok) {
+  //       Alert.alert('Success', 'Registration successful!');
+  //       navigation.navigate('LoginScreen');
+  //     } else {
+  //       Alert.alert('Error', data);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // };
 
 
   return (
@@ -237,3 +237,5 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
 });
+
+export default RegisterScreen;
