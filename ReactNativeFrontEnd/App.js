@@ -28,10 +28,11 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator headerMode="none">
-      
+        <Stack.Screen name="login" component={LoginScreen} />
+        <Stack.Screen name="register" component={RegisterScreen} />
+
       </Stack.Navigator>
-      <Stack.Screen name="login" component={LoginScreen} />
-      <Stack.Screen name="register" component={RegisterScreen} />
+
     </NavigationContainer>
   );
 }
