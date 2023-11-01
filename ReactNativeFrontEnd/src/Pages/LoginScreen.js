@@ -12,31 +12,40 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 
 const LoginScreen = (props) => {
-  // const [usernameOrEmail, setUsernameOrEmail] = useState('');
-  // const [password, setPassword] = useState('');
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  // const handleLogin = async () => {
-  //   try {
-  //     const response = await fetch('http://localhost:5050/api/users/login', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ usernameOrEmail, password }),
-  //     });
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://localhost:5050/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ usernameOrEmail, password }),
+      }).then(res => res.json())
+        .then(async (data) => {
+          try {
+            await AsyncStorage.setItem('token', data.token)
+            props.navigation.replace("home")
+          } catch (e) {
+            console.log("error hai", e)
+            Alert(e)
+          }
+        });
 
-  //     const data = await response.json();
+      const data = await response.json();
 
-  //     if (response.ok) {
-  //       AsyncStorage.setItem('token', data.token);
-  //       navigation.navigate('HomeScreen');
-  //     } else {
-  //       Alert.alert('Error', data);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // };
+      if (response.ok) {
+        AsyncStorage.setItem('token', data.token);
+        navigation.navigate('HomeScreen');
+      } else {
+        Alert.alert('Error', data);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <View style={styles.parent}>
@@ -86,16 +95,21 @@ const LoginScreen = (props) => {
             style={styles.input}
             placeholder="Username or Email"
             placeholderTextColor="#888"
+            label='usernameOrEmail'
+            value={usernameOrEmail}
+            onChangeText={(text) => setUsernameOrEmail(text)}
           />
           <TextInput
             style={styles.input}
+            label='password'
+            onChangeText={(text) => setPassword(text)}
             placeholder="Password"
             placeholderTextColor="#888"
             secureTextEntry={true}
           />
           <View style={styles.buttonsparent}>
-            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-              <Text style={styles.buttonText}>Login</Text>
+            <TouchableOpacity style={styles.loginButton}>
+              <Text style={styles.buttonText} onPress={() => handleLogin(props)}>Login</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.regButton}>
               <Text style={styles.buttonText} onPress={() => props.navigation.navigate("register")}>Register</Text>

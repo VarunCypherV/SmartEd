@@ -8,36 +8,45 @@ import {
   Image,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const RegisterScreen = (props) => {
 
-  // const [name, setName] = useState('');
-  // const [dob, setDob] = useState('');
-  // const [phoneNumber, setPhoneNumber] = useState('');
-  // const [password, setPassword] = useState('');
+  const [username, setUserName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  // const handleRegister = async () => {
-  //   try {
-  //     const response = await fetch('http://localhost:5050/api/users/register', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ name, dob, phoneNumber, password }),
-  //     });
 
-  //     const data = await response.json();
+  const handleRegister = async () => {
+    try {
+      const response = await fetch('http://localhost:5050/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+      }).then(res => res.json())
+        .then(async (data) => {
+          try {
+            await AsyncStorage.setItem('token', data.token)
+          } catch (e) {
+            console.log('error:', e)
+          }
+        })
 
-  //     if (response.ok) {
-  //       Alert.alert('Success', 'Registration successful!');
-  //       navigation.navigate('LoginScreen');
-  //     } else {
-  //       Alert.alert('Error', data);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //   }
-  // };
+      //   const data = await response.json();
+
+      //   if (response.ok) {
+      //     Alert.alert('Success', 'Registration successful!');
+      //     navigation.navigate(LoginScreen);
+      //   } else 
+      //     Alert.alert('Error', data);
+      //   }
+      // } catch (error) {
+      //   console.error('Error:', error);
+    }
+  }
 
 
   return (
@@ -85,11 +94,20 @@ const RegisterScreen = (props) => {
         <View style={styles.container2}>
           <Text style={styles.headerText}>Register</Text>
           <TextInput
+            label
             style={styles.input}
-            placeholder="Name"
+            placeholder="username"
             placeholderTextColor="#888"
           />
           <TextInput
+            label='email'
+            value={email}
+            style={styles.input}
+            placeholder="email"
+            placeholderTextColor="#888"
+            onChangeText={(text) => setEmail(text)}
+          />
+          {/* <TextInput
             style={styles.input}
             placeholder="DOB"
             placeholderTextColor="#888"
@@ -98,18 +116,20 @@ const RegisterScreen = (props) => {
             style={styles.input}
             placeholder="Phone Number"
             placeholderTextColor="#888"
-          />
+          /> */}
           <TextInput
             style={styles.input}
             placeholder="Password"
+            value={password}
             placeholderTextColor="#888"
             secureTextEntry={true}
+            onChangeText={(text) => setPassword(text)}
           />
           <View style={styles.buttonsparent}>
             <TouchableOpacity style={styles.loginButton}>
               <Text style={styles.buttonText}>Go Back</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.regButton}>
+            <TouchableOpacity style={styles.regButton} onPress={() => handleRegister()}>
               <Text style={styles.buttonText}>Register</Text>
             </TouchableOpacity>
           </View>
