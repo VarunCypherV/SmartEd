@@ -26,8 +26,9 @@ function DrawScreen() {
       });
 
       try {
+        
         const uploadResponse = await axios.post(
-          'http://192.168.1.102:3001/image-upload',
+          'http://192.168.0.103:3001/image-upload',
           formData,
           {
             headers: {
