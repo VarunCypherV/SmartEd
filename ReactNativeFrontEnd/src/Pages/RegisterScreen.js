@@ -19,8 +19,9 @@ const RegisterScreen = (props) => {
 
 
   const handleRegister = async () => {
+    console.log(JSON.stringify({ username, email, password }))
     try {
-      const response = await fetch('http://localhost:5050/api/users/register', {
+      const response = await fetch('http://192.168.0.103:3001/api/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,6 +46,8 @@ const RegisterScreen = (props) => {
       //   }
       // } catch (error) {
       //   console.error('Error:', error);
+    }catch (error) {
+        console.error('Error:', error);
     }
   }
 
@@ -98,6 +101,7 @@ const RegisterScreen = (props) => {
             style={styles.input}
             placeholder="username"
             placeholderTextColor="#888"
+            onChangeText={(text)=>setUserName(text)}
           />
           <TextInput
             label='email'
