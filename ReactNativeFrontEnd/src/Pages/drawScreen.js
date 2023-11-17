@@ -3,12 +3,18 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import ViewShot from 'react-native-view-shot';
 import axios from 'axios';
 import DrawingCanvas3 from '../Components/DrawingCanvas3';
-
+import Colorpick from '../Components/colorPicker';
 
 function DrawScreen() {
   const [capturedImage, setCapturedImage] = useState(null);
   const viewShotRef = useRef();
   const drawingcanvas3Ref = useRef();
+  const [showColorPick, setColorPick] = useState(false);
+  const [pencolor, setPenColor] = useState('red');
+
+  const triggerColorPick = () => {
+    setColorPick(!showColorPick);
+  };
 
   const triggerClearCanvas = () => {
     drawingcanvas3Ref.current.handleClearButtonClick();
@@ -77,24 +83,29 @@ function DrawScreen() {
       <View style={styles.DrawContainer}>
         <ViewShot ref={viewShotRef} options={{format: 'png', quality: 1}}>
           <View style={styles.canvasContainer}>
-            <DrawingCanvas3 ref={drawingcanvas3Ref} />
+            <DrawingCanvas3 ref={drawingcanvas3Ref} pencolor={pencolor} />
           </View>
         </ViewShot>
+        {showColorPick && (
+          <View style={styles.colorPickContainer}>
+            <Colorpick />
+          </View>
+        )}
       </View>
       <View style={styles.OptionsContainer}>
         <TouchableOpacity
           style={styles.optionsButton}
           onPress={handleCaptureImage}>
           <Image
-            source={require('../Assests/drawPage/brush.png')} // Replace with your image source
+            source={require('../Assests/drawPage/brush.png')}
             style={styles.imageStyle}
           />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.optionsButton}
-          onPress={triggerClearCanvas}>
+          onPress={triggerColorPick}>
           <Image
-            source={require('../Assests/drawPage/color.png')}
+            source={require('../Assests/drawPage/color.png')} //
             style={styles.imageStyle}
           />
         </TouchableOpacity>
@@ -177,6 +188,15 @@ const styles = StyleSheet.create({
   DrawContainer: {
     flex: 7,
     overflow: 'hidden',
+    position: 'relative', // Ensures proper positioning of Colorpick
+  },
+  colorPickContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 1, // Ensures Colorpick renders on top
   },
   canvasContainer: {
     height: '100%',
