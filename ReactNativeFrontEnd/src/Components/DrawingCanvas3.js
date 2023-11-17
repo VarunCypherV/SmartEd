@@ -16,6 +16,8 @@ const DrawingCanvas3 = React.forwardRef((props, ref) => {
   const [isClearButtonClicked, setClearButtonClicked] = useState(false);
 //===============features
   const [pencolor , setPenColor] = useState("blue");
+
+
    React.useImperativeHandle(ref, () => ({
     handleClearButtonClick,
   }));
@@ -52,9 +54,9 @@ const DrawingCanvas3 = React.forwardRef((props, ref) => {
         <Svg height={height * 0.7} width={width}>
           <Path
             d={paths.join('')}
-            stroke={isClearButtonClicked ? 'transparent' : pencolor}
+            stroke={isClearButtonClicked ? 'transparent' : props.pencolor}
             fill={'transparent'}
-            strokeWidth={3}
+            strokeWidth={props.pensize}
             strokeLinejoin={'round'}
             strokeLinecap={'round'}
           />
@@ -63,9 +65,9 @@ const DrawingCanvas3 = React.forwardRef((props, ref) => {
               <Path
                 key={`path-${index}`}
                 d={currentPath.join('')}
-                stroke={isClearButtonClicked ? 'transparent' : pencolor}
+                stroke={isClearButtonClicked ? 'transparent' : props.pencolor}
                 fill={'transparent'}
-                strokeWidth={2}
+                strokeWidth={props.pensize}
                 strokeLinejoin={'round'}
                 strokeLinecap={'round'}
               />

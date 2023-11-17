@@ -4,13 +4,21 @@ import ViewShot from 'react-native-view-shot';
 import axios from 'axios';
 import DrawingCanvas3 from '../Components/DrawingCanvas3';
 import Colorpick from '../Components/colorPicker';
+import {Shadow} from 'react-native-shadow-2';
+import PensizePick from '../Components/pensizePicker';
 
 function DrawScreen() {
   const [capturedImage, setCapturedImage] = useState(null);
   const viewShotRef = useRef();
   const drawingcanvas3Ref = useRef();
   const [showColorPick, setColorPick] = useState(false);
+  const [showpensize , setShowPenSize] = useState(true);
   const [pencolor, setPenColor] = useState('red');
+  const [pensize , setPenSize] = useState(3);
+
+  const triggerPensizePick = () => {
+    setShowPenSize(!showpensize)
+  }
 
   const triggerColorPick = () => {
     setColorPick(!showColorPick);
@@ -19,6 +27,14 @@ function DrawScreen() {
   const triggerClearCanvas = () => {
     drawingcanvas3Ref.current.handleClearButtonClick();
   };
+
+  const handleColorChange = newColor => {
+    setPenColor(newColor); // Update the pencolor state in the parent component
+  };
+
+  const handlePensizeChange = newPensize => {
+    setPenSize(newPensize)
+  }
 
   const handleCaptureImage = async () => {
     try {
@@ -55,7 +71,6 @@ function DrawScreen() {
       console.error('Error capturing image: ', error);
     }
   };
-
   return (
     <View style={styles.container}>
       <View style={styles.InstructionContainer}>
@@ -83,19 +98,34 @@ function DrawScreen() {
       <View style={styles.DrawContainer}>
         <ViewShot ref={viewShotRef} options={{format: 'png', quality: 1}}>
           <View style={styles.canvasContainer}>
-            <DrawingCanvas3 ref={drawingcanvas3Ref} pencolor={pencolor} />
+            <DrawingCanvas3 ref={drawingcanvas3Ref} pencolor={pencolor} pensize={pensize}/>
           </View>
         </ViewShot>
+
         {showColorPick && (
-          <View style={styles.colorPickContainer}>
-            <Colorpick />
+          <View style={styles.optionsPickContainer}>
+              <Colorpick
+                onColorChange={handleColorChange}
+                pencolor={pencolor}
+              />
           </View>
         )}
+
+
+        {showpensize && (
+          <View style={styles.optionsPickContainer}>
+             <PensizePick 
+              onSizeChange={handlePensizeChange}
+             />
+          </View>
+        )}
+
       </View>
+
       <View style={styles.OptionsContainer}>
         <TouchableOpacity
           style={styles.optionsButton}
-          onPress={handleCaptureImage}>
+          onPress={triggerPensizePick}>
           <Image
             source={require('../Assests/drawPage/brush.png')}
             style={styles.imageStyle}
@@ -190,7 +220,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     position: 'relative', // Ensures proper positioning of Colorpick
   },
-  colorPickContainer: {
+  optionsPickContainer: {
     position: 'absolute',
     top: 0,
     left: 0,
@@ -202,8 +232,8 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     backgroundColor: 'white',
-    borderTopLeftRadius: 40,
-    borderTopRightRadius: 40,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   OptionsContainer: {
     minHeight: 10,
