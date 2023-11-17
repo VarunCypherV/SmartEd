@@ -33,10 +33,11 @@ function App() {
   const user = true;
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="register" component={RegisterScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
+        {isloggedin ? (
+          <MainStackNavigator/>
+        ) : (
+         <LoginStackNavigator/>
+        )}
 
     </NavigationContainer>
   );
