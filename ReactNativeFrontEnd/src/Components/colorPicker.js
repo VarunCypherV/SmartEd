@@ -1,37 +1,59 @@
-import React, {useState, forwardRef} from 'react';
-import {View, Platform} from 'react-native';
-import {TriangleColorPicker, toHsv, fromHsv} from 'react-native-color-picker';
+import React, { useState } from 'react';
+import { View, Button , TouchableOpacity , Text} from 'react-native';
+import { TriangleColorPicker, fromHsv } from 'react-native-color-picker';
 
+const Colorpick = (props) => {
+  const [color, setColor] = useState(props.pencolor);
 
-const Colorpick = React.forwardRef(({onColorChange}, ref) => {
-  const [color, setColor] = useState(color);
-
-  function handleColorChange(newColor) {
-    setColor(fromHsv(newColor));
-    if (typeof onColorChange === 'function') {
-      onColorChange(fromHsv(newColor));
-    }
+  const handleComponentColor = (newColor) => {
+    const formattedColor = fromHsv(newColor);
+    setColor(formattedColor);
   }
 
+  const handleColorChange = () => {
+    if (typeof props.onColorChange === 'function') {
+      props.onColorChange(color);
+    }
+  };
 
   return (
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 7, }}>
         <TriangleColorPicker
+          oldColor={props.pencolor}
           color={color}
-          onColorChange={handleColorChange}
-          onColorSelected={selectedColor =>
+          onColorChange={handleComponentColor}
+          onColorSelected={(selectedColor) =>
             alert(`Color selected: ${selectedColor}`)
           }
-          onOldColorSelected={oldSelectedColor =>
+          onOldColorSelected={(oldSelectedColor) =>
             alert(`Old color selected: ${oldSelectedColor}`)
           }
           style={{
-          flex: 1,
-          padding: 45,
-          backgroundColor: '#212021',
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-        }}
+            width: '100%',
+            height: '100%',
+            padding: 45,
+            backgroundColor: '#FAD4B3',
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          }}
         />
+      </View>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',backgroundColor: '#FAD4B3' }}>
+      <TouchableOpacity
+          style={{
+            borderRadius: 40,
+            backgroundColor: '#FF7B1C',
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+          }}
+          onPress={handleColorChange}
+      >
+      <Text style={{color:"white"}}>Save Color</Text>
+      </TouchableOpacity>
+      </View>
+    </View>
   );
-});
+};
+
 export default Colorpick;

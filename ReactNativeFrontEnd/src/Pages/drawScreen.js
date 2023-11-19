@@ -4,15 +4,15 @@ import ViewShot from 'react-native-view-shot';
 import axios from 'axios';
 import DrawingCanvas3 from '../Components/DrawingCanvas3';
 import Colorpick from '../Components/colorPicker';
-import {Shadow} from 'react-native-shadow-2';
 import PensizePick from '../Components/pensizePicker';
+
 
 function DrawScreen() {
   const [capturedImage, setCapturedImage] = useState(null);
   const viewShotRef = useRef();
   const drawingcanvas3Ref = useRef();
   const [showColorPick, setColorPick] = useState(false);
-  const [showpensize , setShowPenSize] = useState(true);
+  const [showpensize , setShowPenSize] = useState(false);
   const [pencolor, setPenColor] = useState('red');
   const [pensize , setPenSize] = useState(3);
 
@@ -21,6 +21,7 @@ function DrawScreen() {
   }
 
   const triggerColorPick = () => {
+    
     setColorPick(!showColorPick);
   };
 
@@ -103,19 +104,18 @@ function DrawScreen() {
         </ViewShot>
 
         {showColorPick && (
-          <View style={styles.optionsPickContainer}>
+          <View style={styles.optionsPickContainer1}>
               <Colorpick
                 onColorChange={handleColorChange}
                 pencolor={pencolor}
               />
           </View>
         )}
-
-
         {showpensize && (
-          <View style={styles.optionsPickContainer}>
+          <View style={styles.optionsPickContainer2}>
              <PensizePick 
               onSizeChange={handlePensizeChange}
+              size={pensize}
              />
           </View>
         )}
@@ -131,6 +131,7 @@ function DrawScreen() {
             style={styles.imageStyle}
           />
         </TouchableOpacity>
+        
         <TouchableOpacity
           style={styles.optionsButton}
           onPress={triggerColorPick}>
@@ -219,14 +220,24 @@ const styles = StyleSheet.create({
     flex: 7,
     overflow: 'hidden',
     position: 'relative', // Ensures proper positioning of Colorpick
+    display:"flex"
   },
-  optionsPickContainer: {
+  optionsPickContainer1: {
+    margin: "auto",
+    zIndex: 1,
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    zIndex: 1, // Ensures Colorpick renders on top
+  },
+  optionsPickContainer2: {
+    zIndex: 1,
+    flexDirection: 'row', // Adjust the direction of the container
+    alignItems: 'center', // Align items along the cross-axis (vertically)
+    position: 'absolute',
+    bottom: 0,
+    margin:5
   },
   canvasContainer: {
     height: '100%',
