@@ -3,8 +3,6 @@ import ProfileScreen from '../Pages/ProfileScreen';
 import HomeScreen from '../Pages/HomeScreen';
 import FileUploadTestScreen from '../Pages/FileUploadTestScreen';
 import DrawScreen from '../Pages/drawScreen';
-import DrawingCanvas from '../ArchiveCode/DrawingCanvas';
-import AudioRecordingComponent from '../Components/AudioRecorder';
 
 
 const Stack = createStackNavigator();

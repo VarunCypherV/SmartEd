@@ -1,13 +1,21 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef , useEffect} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import ViewShot from 'react-native-view-shot';
 import axios from 'axios';
 import DrawingCanvas3 from '../Components/DrawingCanvas3';
 import Colorpick from '../Components/colorPicker';
 import PensizePick from '../Components/pensizePicker';
+import { playBackgroundMusic , stopBackgroundMusic} from '../Components/audioPlayer';
 
 
 function DrawScreen() {
+  useEffect(() => {
+    playBackgroundMusic();
+
+    return () => {
+      stopBackgroundMusic();
+    };
+  }, []);
   const [capturedImage, setCapturedImage] = useState(null);
   const viewShotRef = useRef();
   const drawingcanvas3Ref = useRef();
@@ -72,6 +80,8 @@ function DrawScreen() {
       console.error('Error capturing image: ', error);
     }
   };
+  
+
   return (
     <View style={styles.container}>
       <View style={styles.InstructionContainer}>

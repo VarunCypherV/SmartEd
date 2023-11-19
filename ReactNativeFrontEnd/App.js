@@ -10,6 +10,8 @@ import LoginScreen from './src/Pages/LoginScreen';
 
 const Stack = createStackNavigator();
 
+
+
 function App() {
   const [isloggedin, setLogged] = useState(null)
   
