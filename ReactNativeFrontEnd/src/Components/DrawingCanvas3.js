@@ -14,8 +14,11 @@ const DrawingCanvas3 = React.forwardRef((props, ref) => {
   const [paths, setPaths] = useState([]);
   const [currentPath, setCurrentPath] = useState([]);
   const [isClearButtonClicked, setClearButtonClicked] = useState(false);
+//===============features
+  const [pencolor , setPenColor] = useState("blue");
 
-  React.useImperativeHandle(ref, () => ({
+
+   React.useImperativeHandle(ref, () => ({
     handleClearButtonClick,
   }));
 
@@ -43,7 +46,7 @@ const DrawingCanvas3 = React.forwardRef((props, ref) => {
   };
 
   return (
-    <View style={styles.container}>
+   
       <View
         style={styles.svgContainer}
         onTouchMove={onTouchMove}
@@ -51,9 +54,9 @@ const DrawingCanvas3 = React.forwardRef((props, ref) => {
         <Svg height={height * 0.7} width={width}>
           <Path
             d={paths.join('')}
-            stroke={isClearButtonClicked ? 'transparent' : 'red'}
+            stroke={isClearButtonClicked ? 'transparent' : props.pencolor}
             fill={'transparent'}
-            strokeWidth={3}
+            strokeWidth={props.pensize}
             strokeLinejoin={'round'}
             strokeLinecap={'round'}
           />
@@ -62,44 +65,21 @@ const DrawingCanvas3 = React.forwardRef((props, ref) => {
               <Path
                 key={`path-${index}`}
                 d={currentPath.join('')}
-                stroke={isClearButtonClicked ? 'transparent' : 'red'}
+                stroke={isClearButtonClicked ? 'transparent' : props.pencolor}
                 fill={'transparent'}
-                strokeWidth={2}
+                strokeWidth={props.pensize}
                 strokeLinejoin={'round'}
                 strokeLinecap={'round'}
               />
             ))}
         </Svg>
       </View>
-    </View>
+
   );
 });
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  svgContainer: {
-    height: height * 0.7,
-    width,
-    borderColor: 'black',
-    backgroundColor: 'white',
-    borderWidth: 1,
-  },
-  clearButton: {
-    marginTop: 10,
-    backgroundColor: 'black',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-  },
-  clearButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+ 
 });
 
 export default DrawingCanvas3;
