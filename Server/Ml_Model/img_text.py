@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1qX9O4YcGNQqF-OQEMtjSX_v4RW75SjgA
 """
 
-!pip install transformers
+# !pip install transformers
 
 from transformers import VisionEncoderDecoderModel,ViTFeatureExtractor,AutoTokenizer
 import torch
