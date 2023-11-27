@@ -17,10 +17,10 @@ app.use(express.json());
 app.use(express.static("public"));
 const corsOrigin = 'http://192.168.0.101:3001';
 app.use(cors({
-  origin:[corsOrigin],
-  methods:['GET','POST'],
-  credentials: true 
-})); 
+  origin: [corsOrigin],
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
 //Routers
 app.use('/api/users', authRouter)
 app.use('/api/users', userDataRouter)
@@ -64,29 +64,45 @@ db.on('error', (error) => {
 //   console.log('Uploaded files: ', req.files);
 // });
 
-//================================================================== AUDIO STORING
-const storage = multer.diskStorage({
+//================================================================== IMAGE STORING
+const image_storage = multer.diskStorage({
   destination(req, file, callback) {
     callback(null, './images'); //images
   },
   filename(req, file, callback) {
-   callback(null, `${Date.now()}_${file.originalname}`);
+    callback(null, `${Date.now()}_${file.originalname}`);
   },
 });
 
-const upload = multer({ storage });
+const image_upload = multer({ image_storage });
 
 
-app.post('/image-upload', upload.array("my-image-file"), (req, res) => {
+app.post('/image-upload', image_upload.array("my-image-file"), (req, res) => {
   console.log('POST request received to /image-upload.');
   console.log('Uploaded files: ', req.files);
 });
+//================================================================AUDIO STORAGE
+const audio_storage = multer.diskStorage({
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  },
+  destination: function (req, file, cb) {
+    cb(null, './Audio')
+  },
+})
+
+const audio_upload = multer({ storage: audio_storage });
+app.post('/audio-upload', audio_upload.single('audio'), (req, res) => {
+  console.log('Audio file received:', req.file);
+  res.send({ message: 'Audio uploaded successfully' });
+});
+
 
 
 //==========================server config==========================
 
 const server = http.createServer(app);
 
-server.listen(3001, process.env.IP, function(){
+server.listen(3001, process.env.IP, function () {
   console.log("SERVER IS RUNNING");
 });
