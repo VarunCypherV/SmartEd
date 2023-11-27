@@ -10,6 +10,8 @@ import LoginScreen from './src/Pages/LoginScreen';
 
 const Stack = createStackNavigator();
 
+
+
 function App() {
   const [isloggedin, setLogged] = useState(null)
   
@@ -33,10 +35,11 @@ function App() {
   const user = true;
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="register" component={RegisterScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
+        {isloggedin ? (
+          <MainStackNavigator/>
+        ) : (
+         <LoginStackNavigator/>
+        )}
 
     </NavigationContainer>
   );
