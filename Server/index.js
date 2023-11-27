@@ -82,7 +82,7 @@ app.post('/image-upload', image_upload.array("my-image-file"), (req, res) => {
   console.log('Uploaded files: ', req.files);
 });
 //================================================================AUDIO STORAGE
-const storage = multer.diskStorage({
+const audio_storage = multer.diskStorage({
   filename: function (req, file, cb) {
     cb(null, file.originalname)
   },
@@ -91,7 +91,7 @@ const storage = multer.diskStorage({
   },
 })
 
-const audio_upload = multer({ storage: storage });
+const audio_upload = multer({ storage: audio_storage });
 app.post('/audio-upload', audio_upload.single('audio'), (req, res) => {
   console.log('Audio file received:', req.file);
   res.send({ message: 'Audio uploaded successfully' });
