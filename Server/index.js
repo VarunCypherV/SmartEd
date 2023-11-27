@@ -17,10 +17,10 @@ app.use(express.json());
 app.use(express.static("public"));
 const corsOrigin = 'http://192.168.0.103:3001';
 app.use(cors({
-  origin:[corsOrigin],
-  methods:['GET','POST'],
-  credentials: true 
-})); 
+  origin: [corsOrigin],
+  methods: ['GET', 'POST'],
+  credentials: true
+}));
 //Routers
 app.use('/api/users', authRouter)
 app.use('/api/users', userDataRouter)
@@ -64,13 +64,13 @@ db.on('error', (error) => {
 //   console.log('Uploaded files: ', req.files);
 // });
 
-//================================================================== AUDIO STORING
+//================================================================== IMAGE STORING
 const storage = multer.diskStorage({
   destination(req, file, callback) {
     callback(null, './images'); //images
   },
   filename(req, file, callback) {
-   callback(null, `${Date.now()}_${file.originalname}`);
+    callback(null, `${Date.now()}_${file.originalname}`);
   },
 });
 
@@ -87,6 +87,6 @@ app.post('/image-upload', upload.array("my-image-file"), (req, res) => {
 
 const server = http.createServer(app);
 
-server.listen(3001, process.env.IP, function(){
+server.listen(3001, process.env.IP, function () {
   console.log("SERVER IS RUNNING");
 });
