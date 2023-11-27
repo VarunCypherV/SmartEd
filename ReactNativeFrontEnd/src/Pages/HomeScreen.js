@@ -9,9 +9,9 @@ import {
 export default function HomeScreen() {
 
   return (
-          <View>
-            <Text>Home</Text>
-          </View>
+    <View>
+      <Text>Home</Text>
+    </View>
   );
 }
 
