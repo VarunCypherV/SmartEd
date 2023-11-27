@@ -65,7 +65,7 @@ db.on('error', (error) => {
 // });
 
 //================================================================== IMAGE STORING
-const storage = multer.diskStorage({
+const image_storage = multer.diskStorage({
   destination(req, file, callback) {
     callback(null, './images'); //images
   },
@@ -74,7 +74,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({ image_storage });
 
 
 app.post('/image-upload', upload.array("my-image-file"), (req, res) => {
