@@ -74,13 +74,29 @@ const image_storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ image_storage });
+const image_upload = multer({ image_storage });
 
 
-app.post('/image-upload', upload.array("my-image-file"), (req, res) => {
+app.post('/image-upload', image_upload.array("my-image-file"), (req, res) => {
   console.log('POST request received to /image-upload.');
   console.log('Uploaded files: ', req.files);
 });
+//================================================================AUDIO STORAGE
+const storage = multer.diskStorage({
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  },
+  destination: function (req, file, cb) {
+    cb(null, './Audio')
+  },
+})
+
+const audio_upload = multer({ storage: storage });
+app.post('/audio-upload', audio_upload.single('audio'), (req, res) => {
+  console.log('Audio file received:', req.file);
+  res.send({ message: 'Audio uploaded successfully' });
+});
+
 
 
 //==========================server config==========================
