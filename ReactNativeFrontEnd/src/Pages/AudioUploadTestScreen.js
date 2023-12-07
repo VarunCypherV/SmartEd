@@ -32,7 +32,7 @@ const AudioUploadTestScreen = () => {
         if (recording) {
             try {
                 await recording.stopAndUnloadAsync();
-                let allRecordi
+
                 const uri = recording.getURI();
                 console.log('Recording stopped and stored at', uri);
 
@@ -58,7 +58,7 @@ const AudioUploadTestScreen = () => {
         });
 
         try {
-            const response = await fetch('http://192.168.0.103:3001/audio-upload', {
+            const response = await fetch('http://192.168.1.6:3001/audio-upload', {
                 method: 'POST',
                 body: formData,
                 headers: {

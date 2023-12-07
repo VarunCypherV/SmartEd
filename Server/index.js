@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.static("public"));
-const corsOrigin = 'http://192.168.0.101:3001';
+const corsOrigin = 'http://192.168.1.6:3001';
 app.use(cors({
   origin: [corsOrigin],
   methods: ['GET', 'POST'],

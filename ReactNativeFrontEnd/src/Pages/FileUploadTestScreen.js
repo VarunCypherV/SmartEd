@@ -35,7 +35,7 @@ export default function FileUploadTestScreen() {
 
       try {
         const uploadResponse = await axios.post(
-          'http://192.168.1.101:3001/image-upload', // Correct the URL
+          'http://192.168.0.103:3001/image-upload', // Correct the URL
           formData,
           {
             headers: {
