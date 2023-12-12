@@ -10,7 +10,7 @@ const Stack = createStackNavigator();
 export default function MainStackNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="FileUploadTest" component={AudioUploadTestScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="AudioUploadTest" component={AudioUploadTestScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Draw" component={DrawScreen} options={{ headerShown: false }} />
 
       <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
