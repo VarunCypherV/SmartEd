@@ -8,7 +8,7 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-import  AsyncStorage  from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 
 const LoginScreen = (props) => {
@@ -17,7 +17,7 @@ const LoginScreen = (props) => {
 
   const handleLogin = async () => {
     try {
-      console.log("sendingLogin:",JSON.stringify({ usernameOrEmail, password }))
+      console.log("sendingLogin:", JSON.stringify({ usernameOrEmail, password }))
       const response = await fetch('http://192.168.0.103:3001/api/users/login', {
         method: 'POST',
         headers: {

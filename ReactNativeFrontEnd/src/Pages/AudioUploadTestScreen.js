@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Button, PermissionsAndroid, View } from 'react-native';
+import { Button, PermissionsAndroid, View, StyleSheet, Text, TouchableOpacity, Image, ImageBackground } from 'react-native';
+// import { Shapes } from 'react-native-background-shapes'
 import { Audio } from 'expo-av';
+import LinearGradient from 'react-native-linear-gradient'
 import * as FileSystem from 'react-native-fs';
 
 const AudioUploadTestScreen = () => {
-    const [recording, setRecording] = useState < Audio.Recording | null > (null);
+    const { recording, setRecording } = useState < Audio.Recording | null > (null);
+
 
     async function startRecording() {
         try {
@@ -32,7 +35,7 @@ const AudioUploadTestScreen = () => {
         if (recording) {
             try {
                 await recording.stopAndUnloadAsync();
-                let allRecordi
+
                 const uri = recording.getURI();
                 console.log('Recording stopped and stored at', uri);
 
@@ -58,7 +61,7 @@ const AudioUploadTestScreen = () => {
         });
 
         try {
-            const response = await fetch('http://192.168.0.103:3001/audio-upload', {
+            const response = await fetch('http://192.168.1.6:3000/audio-upload', {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -81,16 +84,164 @@ const AudioUploadTestScreen = () => {
             console.error('Upload failed:', error);
         }
     }
+    const renderButtonContent = () => {
+        if (recording) {
+            return (
+                <>
+                    <Image style={styles.recordingImage} source={require('./assets/recording.png')} />
+                </>
+            );
+        } else {
+            return (
+                <>
+                    <Image source={require('./assets/mic.png')} style={styles.recordingImage} />
+                </>
+            );
+        }
+    };
+
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Button
-                title={recording ? 'Stop Recording' : 'Start Recording'}
-                onPress={recording ? stopRecording : startRecording}
-            />
+        <LinearGradient
+            colors={['#FF4d01', '#ff0044', '#ff0033']}
+            style={{ flex: 1 }}
 
-        </View>
+        >
+
+
+            <View style={styles.mainContainer}>
+
+
+
+
+                <View style={styles.topRow}>
+                    <Text style={styles.pointsText}>Points:100</Text>
+                    <Text style={styles.timerText}>00:00</Text>
+                </View>
+
+                <View style={styles.centeredBox}>
+
+                    <View style={styles.sentenceHeader}>
+                        <Text style={styles.sentenceHeaderText}>Let's hear you say...</Text>
+                    </View>
+
+                    <View style={styles.sentenceContainer}>
+                        {/* <View style={styles.sentenceHeader}>
+              <Text style={styles.sentenceHeaderText}>Lets hear you say</Text>
+
+            </View> */}
+
+                        <Text style={styles.sentenceText}>"The fat hoe jumped over the hairy chest"</Text>
+                        <Image style={styles.vectorline} source={require('./assets/vectorline.png')} />
+                    </View>
+                    <TouchableOpacity style={styles.buttonContainer} onPress={recording ? stopRecording : startRecording}>
+                        {renderButtonContent()}
+                    </TouchableOpacity>
+                </View>
+
+                {/* <Button
+        title={recording ? 'Stop Recording' : 'Start Recording'}
+        onPress={recording ? stopRecording : startRecording}
+      /> */}
+
+            </View >
+        </LinearGradient>
+
+
     );
 };
 
+const styles = StyleSheet.create({
+    mainContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        margin: 25
+
+    },
+    topRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: 10,
+        height: 100,
+        backgroundColor: '#FFFCAD',
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        margin: 10
+    },
+    pointsText: {
+        fontSize: 24,
+        textAlignVertical: 'center',
+        textAlign: 'right',
+        color: 'black',
+        fontFamily: 'Monospace',
+        fontWeight: 'bold',
+    },
+    timerText: {
+        fontSize: 24,
+        textAlign: 'right',
+        textAlignVertical: 'center',
+        color: 'black',
+        fontFamily: 'Monospace',
+        fontWeight: 'bold',
+    },
+    centeredBox: {
+        flex: 1,
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 10, // Adjust as needed
+        borderRadius: 25,
+        backgroundColor: '#FF4000',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 2,
+            height: 2,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
+        elevation: 12.5,
+    },
+    sentenceHeader: {
+        alignSelf: 'flex-start',
+        marginBottom: 25
+    },
+    sentenceHeaderText: {
+        fontSize: 18,
+        color: 'white',
+        fontWeight: 'bold',
+
+    },
+    sentenceText: {
+        textAlign: 'center',
+        color: '#FFFCAD',
+        fontWeight: 'bold',
+        fontSize: 24
+
+    },
+    sentenceContainer: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 50,
+        paddingVertical: 50,
+        marginHorizontal: 25,
+        borderRadius: 25,
+        marginBottom: 20,
+    },
+    vectorline: {
+        marginTop: 25
+    },
+    buttonContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1
+
+    },
+    recordingImage: {
+        width: 150,
+        height: 150
+    },
+});
 export default AudioUploadTestScreen;

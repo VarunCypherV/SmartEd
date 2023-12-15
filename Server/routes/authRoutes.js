@@ -49,6 +49,17 @@ router.post('/register', async (req, res) => {
     });
     try {
         const newUser = await user.save();
+        // const userDetails = new UserDetails({
+        //     name: req.body.username,
+        //     age:,
+        //     DOB:,
+        //     email: req.body.email,
+        //     userId: newUser._id,
+        //     points:,
+
+
+
+        // });
         const token = jwt.sign({ userId: user._id }, jwtkey)
         res.send({ token })
         // res.send('New user created with id' + newUser.id)
