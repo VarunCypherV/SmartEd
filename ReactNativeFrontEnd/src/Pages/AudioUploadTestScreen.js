@@ -88,13 +88,13 @@ const AudioUploadTestScreen = () => {
         if (recording) {
             return (
                 <>
-                    <Image style={styles.recordingImage} source={require('./assets/recording.png')} />
+                    <Image style={styles.recordingImage} source={require('../Assests/audioscreenimages/recording.png')} />
                 </>
             );
         } else {
             return (
                 <>
-                    <Image source={require('./assets/mic.png')} style={styles.recordingImage} />
+                    <Image source={require('../Assests/audioscreenimages/mic.png')} style={styles.recordingImage} />
                 </>
             );
         }
@@ -132,7 +132,7 @@ const AudioUploadTestScreen = () => {
             </View> */}
 
                         <Text style={styles.sentenceText}>"The fat hoe jumped over the hairy chest"</Text>
-                        <Image style={styles.vectorline} source={require('./assets/vectorline.png')} />
+                        <Image style={styles.vectorline} source={require('../Assests/audioscreenimages/vectorline.png')} />
                     </View>
                     <TouchableOpacity style={styles.buttonContainer} onPress={recording ? stopRecording : startRecording}>
                         {renderButtonContent()}
