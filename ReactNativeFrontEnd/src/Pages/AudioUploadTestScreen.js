@@ -4,6 +4,7 @@ import { Button, PermissionsAndroid, View, StyleSheet, Text, TouchableOpacity, I
 import { Audio } from 'expo-av';
 import LinearGradient from 'react-native-linear-gradient'
 import * as FileSystem from 'react-native-fs';
+import Timer from '../ArchiveCode/Timer';
 
 const AudioUploadTestScreen = () => {
     const { recording, setRecording } = useState < Audio.Recording | null > (null);
@@ -61,7 +62,7 @@ const AudioUploadTestScreen = () => {
         });
 
         try {
-            const response = await fetch('http://192.168.1.6:3000/audio-upload', {
+            const response = await fetch('http://192.168.0.105:3000/audio-upload', {
                 method: 'POST',
                 body: formData,
                 headers: {
@@ -116,7 +117,7 @@ const AudioUploadTestScreen = () => {
 
                 <View style={styles.topRow}>
                     <Text style={styles.pointsText}>Points:100</Text>
-                    <Text style={styles.timerText}>00:00</Text>
+                    <Timer/>
                 </View>
 
                 <View style={styles.centeredBox}>
@@ -168,7 +169,8 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 20,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
-        margin: 10
+        margin: 10,
+        alignItems: 'center',
     },
     pointsText: {
         fontSize: 24,

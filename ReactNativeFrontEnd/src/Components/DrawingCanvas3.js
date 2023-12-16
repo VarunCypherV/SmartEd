@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {Svg, Path} from 'react-native-svg';
 
+
 const {height, width} = Dimensions.get('window');
 
 const DrawingCanvas3 = React.forwardRef((props, ref) => {
@@ -15,7 +16,7 @@ const DrawingCanvas3 = React.forwardRef((props, ref) => {
   const [currentPath, setCurrentPath] = useState([]);
   const [isClearButtonClicked, setClearButtonClicked] = useState(false);
 //===============features
-  const [pencolor , setPenColor] = useState("blue");
+
 
 
    React.useImperativeHandle(ref, () => ({

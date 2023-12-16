@@ -8515,10 +8515,10 @@ react-native-track-player@^4.0.1:
   resolved "https://registry.npmjs.org/react-native-track-player/-/react-native-track-player-4.0.1.tgz"
   integrity sha512-DpqKL4TQS0kGlHwEtmMrL++mdgWb+uc75eQiP3vfYSlgvAJjbXbkL9h+cofndSuq4TTCp8jclAK+hZKqtMw6+A==
 
-react-native-view-shot@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.npmjs.org/react-native-view-shot/-/react-native-view-shot-3.7.0.tgz"
-  integrity sha512-tQruLNjs7Ee/p6xUgJqF6glnatHaq/UqaIQ6KdYIFG0+XpUZdhqmEM4WMLsYfayfFEhdlF86G1S3eXMOfDNzFg==
+react-native-view-shot@^3.8.0:
+  version "3.8.0"
+  resolved "https://registry.npmjs.org/react-native-view-shot/-/react-native-view-shot-3.8.0.tgz"
+  integrity sha512-4cU8SOhMn3YQIrskh+5Q8VvVRxQOu8/s1M9NAL4z5BY1Rm0HXMWkQJ4N0XsZ42+Yca+y86ISF3LC5qdLPvPuiA==
   dependencies:
     html2canvas "^1.4.1"
 

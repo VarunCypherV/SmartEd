@@ -1,3 +1,4 @@
+
 import React, {useState, useEffect, useRef} from 'react';
 import {
   Button,
@@ -9,19 +10,20 @@ import {
   Image,
   ImageBackground,
 } from 'react-native';
+import axios from 'axios';
 // import { Shapes } from 'react-native-background-shapes'
 import LinearGradient from 'react-native-linear-gradient';
 import DrawingCanvas3 from '../Components/DrawingCanvas3';
 import Colorpick from '../Components/colorPicker';
 import PensizePick from '../Components/pensizePicker';
-import axios from 'axios';
 import {
   playBackgroundMusic,
   stopBackgroundMusic,
 } from '../Components/audioPlayer';
 import ViewShot from 'react-native-view-shot';
 import Timer from '../ArchiveCode/Timer';
-const DrawScreen = () => {
+
+const WrtitingUploadScreen = () => {
   useEffect(() => {
     playBackgroundMusic();
 
@@ -32,7 +34,7 @@ const DrawScreen = () => {
 
   const [capturedImage, setCapturedImage] = useState(null);
   const viewShotRef = useRef();
-  const drawingcanvas3Ref = useRef();
+  const Writingcanvas3Ref = useRef();
   const [showColorPick, setColorPick] = useState(false);
   const [showpensize, setShowPenSize] = useState(false);
   const [pencolor, setPenColor] = useState('white');
@@ -47,7 +49,7 @@ const DrawScreen = () => {
   };
 
   const triggerClearCanvas = () => {
-    drawingcanvas3Ref.current.handleClearButtonClick();
+    Writingcanvas3Ref.current.handleClearButtonClick();
   };
 
   const handleColorChange = newColor => {
@@ -57,11 +59,7 @@ const DrawScreen = () => {
   const handlePensizeChange = newPensize => {
     setPenSize(newPensize);
   };
-  // const viewShotRefHandle = ref => {
-  //   if(ref) {
-  //     viewShotRef.current=ref
-  //   }
-  // }
+
   const handleCaptureImage = async () => {
     try {
       const uri = await viewShotRef.current.capture();
@@ -94,8 +92,7 @@ const DrawScreen = () => {
 
       setCapturedImage(uri);
     } catch (error) {
-      console.error('Error uploading image:', error);
-      
+      console.error('Error capturing image: ', error);
     }
   };
 
@@ -106,13 +103,12 @@ const DrawScreen = () => {
       <View style={styles.mainContainer}>
         <View style={styles.topRow}>
           <Text style={styles.pointsText}>Points:100</Text>
-          {/* <Text style={styles.timerText}>00:00</Text> */}
-          <Timer style={styles.timerText} />
+         <Timer/>
         </View>
 
         <View style={styles.centeredBox}>
           <View style={styles.sentenceHeader}>
-            <Text style={styles.sentenceHeaderText}>Let's see you draw...</Text>
+            <Text style={styles.sentenceHeaderText}>Let's see you Write...</Text>
           </View>
 
           <View style={styles.sentenceContainer}>
@@ -123,16 +119,14 @@ const DrawScreen = () => {
             />
           </View>
 
-          <View  style={styles.DrawContainer}>
-            <ViewShot  ref={viewShotRef}  options={{format: 'png', quality: 1}}>
-              {/* <View style={styles.canvasContainer}> */}
+          <View style={styles.WriteContainer}>
+            <ViewShot ref={viewShotRef} collapsable={false} options={{format: 'png', quality: 1}}>
                 <DrawingCanvas3
-                  ref={drawingcanvas3Ref}
+                  ref={Writingcanvas3Ref}
                   pencolor={pencolor}
                   pensize={pensize}
                   style={styles.canvasContainer}
                 />
-              {/* </View> */}
             </ViewShot>
 
             {showColorPick && (
@@ -152,7 +146,6 @@ const DrawScreen = () => {
               </View>
             )}
           </View>
-
         </View>
       </View>
 
@@ -236,6 +229,8 @@ const styles = StyleSheet.create({
   },
   timerText: {
     fontSize: 24,
+    textAlign: 'right',
+    textAlignVertical: 'center',
     color: 'black',
     fontFamily: 'Monospace',
     fontWeight: 'bold',
@@ -285,7 +280,7 @@ const styles = StyleSheet.create({
   vectorline: {
     marginTop: 25,
   },
-  DrawContainer: {
+  WriteContainer: {
     flex: 6,
     overflow: 'hidden',
     width:"100%",
@@ -338,4 +333,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-export default DrawScreen;
+export default WrtitingUploadScreen;
+
+

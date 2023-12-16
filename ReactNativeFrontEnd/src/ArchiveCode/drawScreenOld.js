@@ -1,27 +1,16 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {
-  Button,
-  PermissionsAndroid,
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  Image,
-  ImageBackground,
-} from 'react-native';
-// import { Shapes } from 'react-native-background-shapes'
-import LinearGradient from 'react-native-linear-gradient';
+import React, {useState, useRef, useEffect} from 'react';
+import {View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import ViewShot from 'react-native-view-shot';
+import axios from 'axios';
 import DrawingCanvas3 from '../Components/DrawingCanvas3';
 import Colorpick from '../Components/colorPicker';
 import PensizePick from '../Components/pensizePicker';
-import axios from 'axios';
 import {
   playBackgroundMusic,
   stopBackgroundMusic,
 } from '../Components/audioPlayer';
-import ViewShot from 'react-native-view-shot';
-import Timer from '../ArchiveCode/Timer';
-const DrawScreen = () => {
+
+function DrawScreenOld() {
   useEffect(() => {
     playBackgroundMusic();
 
@@ -29,13 +18,12 @@ const DrawScreen = () => {
       stopBackgroundMusic();
     };
   }, []);
-
   const [capturedImage, setCapturedImage] = useState(null);
   const viewShotRef = useRef();
   const drawingcanvas3Ref = useRef();
   const [showColorPick, setColorPick] = useState(false);
   const [showpensize, setShowPenSize] = useState(false);
-  const [pencolor, setPenColor] = useState('white');
+  const [pencolor, setPenColor] = useState('red');
   const [pensize, setPenSize] = useState(3);
 
   const triggerPensizePick = () => {
@@ -57,15 +45,10 @@ const DrawScreen = () => {
   const handlePensizeChange = newPensize => {
     setPenSize(newPensize);
   };
-  // const viewShotRefHandle = ref => {
-  //   if(ref) {
-  //     viewShotRef.current=ref
-  //   }
-  // }
+
   const handleCaptureImage = async () => {
     try {
       const uri = await viewShotRef.current.capture();
-      console.log(uri);
       const formData = new FormData();
       formData.append('my-image-file', {
         uri: uri,
@@ -91,72 +74,59 @@ const DrawScreen = () => {
       } catch (error) {
         console.error('Error uploading image:', error);
       }
-
       setCapturedImage(uri);
     } catch (error) {
-      console.error('Error uploading image:', error);
-      
+      console.error('Error capturing image: ', error);
     }
   };
 
   return (
-    <LinearGradient
-      colors={['#FF4d01', '#ff0044', '#ff0033']}
-      style={{flex: 1}}>
-      <View style={styles.mainContainer}>
-        <View style={styles.topRow}>
-          <Text style={styles.pointsText}>Points:100</Text>
-          {/* <Text style={styles.timerText}>00:00</Text> */}
-          <Timer style={styles.timerText} />
-        </View>
-
-        <View style={styles.centeredBox}>
-          <View style={styles.sentenceHeader}>
-            <Text style={styles.sentenceHeaderText}>Let's see you draw...</Text>
-          </View>
-
-          <View style={styles.sentenceContainer}>
-            <Text style={styles.sentenceText}>"The fat hoe"</Text>
+    <View style={styles.container}>
+    
+      <View style={styles.InstructionContainer}>
+        <View style={styles.InstructionContainerNavBar}>
+          <View style={styles.imageStyleNavBarview}>
             <Image
-              style={styles.vectorline}
-              source={require('../Assests/audioscreenimages/vectorline.png')}
+              source={require('../Assests/drawPage/home.png')} // Replace with your image source
+              style={styles.imageStyleNavBar}
             />
           </View>
-
-          <View  style={styles.DrawContainer}>
-            <ViewShot  ref={viewShotRef}  options={{format: 'png', quality: 1}}>
-              {/* <View style={styles.canvasContainer}> */}
-                <DrawingCanvas3
-                  ref={drawingcanvas3Ref}
-                  pencolor={pencolor}
-                  pensize={pensize}
-                  style={styles.canvasContainer}
-                />
-              {/* </View> */}
-            </ViewShot>
-
-            {showColorPick && (
-              <View style={styles.optionsPickContainer1}>
-                <Colorpick
-                  onColorChange={handleColorChange}
-                  pencolor={pencolor}
-                />
-              </View>
-            )}
-            {showpensize && (
-              <View style={styles.optionsPickContainer2}>
-                <PensizePick
-                  onSizeChange={handlePensizeChange}
-                  size={pensize}
-                />
-              </View>
-            )}
+          <View style={styles.levelView}>
+            <Text style={styles.level}>Level 1</Text>
           </View>
-
+        </View>
+        <View style={styles.InstructionContainerContentBar}>
+          <Text style={styles.InstructionContainerContentBarHeadText}>
+            Hi UserName!
+          </Text>
+          <Text style={styles.InstructionContainerContentBarContentText}>
+            Lets Draw a "Ball"
+          </Text>
         </View>
       </View>
 
-      {/* //footer */}
+      <View style={styles.DrawContainer}>
+        <ViewShot ref={viewShotRef} options={{format: 'png', quality: 1}}>
+          <View style={styles.canvasContainer}>
+            <DrawingCanvas3
+              ref={drawingcanvas3Ref}
+              pencolor={pencolor}
+              pensize={pensize}
+            />
+          </View>
+        </ViewShot>
+
+        {showColorPick && (
+          <View style={styles.optionsPickContainer1}>
+            <Colorpick onColorChange={handleColorChange} pencolor={pencolor} />
+          </View>
+        )}
+        {showpensize && (
+          <View style={styles.optionsPickContainer2}>
+            <PensizePick onSizeChange={handlePensizeChange} size={pensize} />
+          </View>
+        )}
+      </View>
 
       <View style={styles.OptionsContainer}>
         <TouchableOpacity
@@ -167,7 +137,7 @@ const DrawScreen = () => {
             style={styles.imageStyle}
           />
         </TouchableOpacity>
-        
+
         <TouchableOpacity
           style={styles.optionsButton}
           onPress={triggerColorPick}>
@@ -201,98 +171,65 @@ const DrawScreen = () => {
           />
         </TouchableOpacity>
       </View>
-
-    </LinearGradient>
+    </View>
   );
-};
+}
+
+export default DrawScreenOld;
 
 const styles = StyleSheet.create({
-  mainContainer: {
+  container: {
+    backgroundColor: '#FF7B1C',
+    display: 'flex',
+    flexDirection: 'column',
     flex: 1,
-    justifyContent: 'center',
-    margin: 25,
+  },
+  InstructionContainer: {
+    flex: 2,
+    display: 'flex',
     flexDirection: 'column',
   },
-  topRow: {
+  InstructionContainerNavBar: {
+    display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    height: 100,
-    backgroundColor: '#FFFCAD',
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    margin: 10,
-    alignItems:"center"
+    justifyContent: 'space-between', // Aligns children to the start and end of the container
+    alignItems: 'center', // Aligns items along the cross axis (vertically in this case)
   },
-  pointsText: {
-    fontSize: 24,
-    textAlignVertical: 'center',
-    textAlign: 'right',
-    color: 'black',
-    fontFamily: 'Monospace',
-    fontWeight: 'bold',
+  imageStyleNavBarview: {
+    marginTop: 20,
+    marginLeft: 20,
   },
-  timerText: {
-    fontSize: 24,
-    color: 'black',
-    fontFamily: 'Monospace',
-    fontWeight: 'bold',
+  levelView: {
+    marginTop: 20,
+    marginRight: 20,
   },
-  centeredBox: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 10, // Adjust as needed
-    borderRadius: 25,
-    backgroundColor: '#FF4000',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
-    elevation: 12.5,
-    overflow:'hidden'
-  },
-  sentenceHeader: {
-    alignSelf: 'flex-start',
-    margin:5,
-  },
-  sentenceHeaderText: {
+  level: {
     fontSize: 18,
     color: 'white',
-    fontWeight: 'bold',
-    padding:10
+    fontWeight: '800',
   },
-  sentenceText: {
-    textAlign: 'center',
-    color: '#FFFCAD',
-    fontWeight: 'bold',
-    fontSize: 24,
+  InstructionContainerContentBar: {
+    margin: 20,
   },
-  sentenceContainer: {
-    flex: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 25,
-    marginBottom: 10,
-    marginTop:50,
-    paddingHorizontal:10
+  InstructionContainerContentBarHeadText: {
+    fontSize: 32,
+    color: 'white',
+    paddingBottom: 5,
+    fontWeight: '600',
   },
-  vectorline: {
-    marginTop: 25,
+  InstructionContainerContentBarContentText: {
+    paddingTop: 5,
+    fontSize: 26,
+    color: 'white',
   },
   DrawContainer: {
-    flex: 6,
+    flex: 7,
     overflow: 'hidden',
-    width:"100%",
-    height:"100%"
+    position: 'relative', // Ensures proper positioning of Colorpick
+    display: 'flex',
   },
   optionsPickContainer1: {
-    margin: "auto",
+    margin: 'auto',
     zIndex: 1,
     position: 'absolute',
     top: 0,
@@ -302,25 +239,27 @@ const styles = StyleSheet.create({
   },
   optionsPickContainer2: {
     zIndex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'row', // Adjust the direction of the container
+    alignItems: 'center', // Align items along the cross-axis (vertically)
     position: 'absolute',
     bottom: 0,
+    margin: 5,
   },
   canvasContainer: {
     height: '100%',
     width: '100%',
-    flex:1
+    backgroundColor: 'white',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
   },
   OptionsContainer: {
     minHeight: 10,
-    paddingBottom:10,
+    margin: 5,
     minWidth: '100vw',
-
+    backgroundColor: '#FF7B1C',
     display: 'flex',
     flexDirection: 'row',
     flex: 0,
-    
   },
   optionsButton: {
     flex: 1,
@@ -328,14 +267,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 5,
     margin: 5,
-    
   },
-  imageStyle: {
-    
-  },
+  imageStyle: {},
   buttonText: {
     color: 'white',
     fontSize: 16,
   },
 });
-export default DrawScreen;

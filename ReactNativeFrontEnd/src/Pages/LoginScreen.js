@@ -18,7 +18,7 @@ const LoginScreen = (props) => {
   const handleLogin = async () => {
     try {
       console.log("sendingLogin:", JSON.stringify({ usernameOrEmail, password }))
-      const response = await fetch('http://192.168.0.103:3001/api/users/login', {
+      const response = await fetch('http://192.168.0.105:3001/api/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,7 +28,7 @@ const LoginScreen = (props) => {
         .then(async (data) => {
           try {
             await AsyncStorage.setItem('token', data.token)
-            props.navigation.replace("home")
+            props.navigation.replace("Home")
           } catch (e) {
             console.log("error hai", e)
             Alert(e)

@@ -15,7 +15,7 @@ const PensizePick = React.forwardRef((props, ref) => {
   const thumbImage = require('../Assests/loginImages/p2.png');
   return (
       <Slider
-      style={{width: "100%", height: "100%" ,transform: [{ scaleY: 1.5 }], marginBottom:10,flex:1, backgroundColor:"#FAD4B3"}}
+      style={{width: "100%", height: "100%" ,transform: [{ scaleY: 1.5 }],marginBottom:10,flex:1, backgroundColor:"#FAD4B3" , borderRadius:25}}
       minimumValue={0}
       maximumValue={10}
       onValueChange={handleSizeChange}

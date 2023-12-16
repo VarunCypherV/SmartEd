@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.static("public"));
-const corsOrigin = 'http://192.168.1.6:3001';
+const corsOrigin = 'http://192.168.0.105:3001';
 app.use(cors({
   origin: [corsOrigin],
   methods: ['GET', 'POST'],
@@ -65,21 +65,38 @@ db.on('error', (error) => {
 // });
 
 //================================================================== IMAGE STORING
+// const image_storage = multer.diskStorage({
+//   destination : function(req, file, callback) {
+//     callback(null, './images'); //images
+//   },
+//   filename : function(req, file, callback) {
+//     callback(null, `${Date.now()}_${file.originalname}`);
+//   },
+// });
+
+// const image_upload = multer({ image_storage });
+
+
+// app.post('/image-upload', image_upload.array("my-image-file"), (req, res) => {
+//   console.log('POST request received to /image-upload.');
+//   console.log('Uploaded files: ', req.files);
+// });
 const image_storage = multer.diskStorage({
-  destination(req, file, callback) {
-    callback(null, './images'); //images
+  destination: function (req, file, callback) {
+    callback(null, './images'); // Destination folder for images
   },
-  filename(req, file, callback) {
+  filename: function (req, file, callback) {
     callback(null, `${Date.now()}_${file.originalname}`);
   },
 });
 
-const image_upload = multer({ image_storage });
+const image_upload = multer({ storage: image_storage });
 
-
-app.post('/image-upload', image_upload.array("my-image-file"), (req, res) => {
+app.post('/image-upload', image_upload.single("my-image-file"), (req, res) => {
   console.log('POST request received to /image-upload.');
-  console.log('Uploaded files: ', req.files);
+  console.log('Uploaded file: ', req.file); // Use req.file to access the uploaded file
+  // Add your handling logic here
+  res.send({ message: 'Image uploaded successfully' }); // Send a response
 });
 //================================================================AUDIO STORAGE
 const audio_storage = multer.diskStorage({

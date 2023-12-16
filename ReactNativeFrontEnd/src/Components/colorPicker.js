@@ -39,7 +39,7 @@ const Colorpick = (props) => {
           }}
         />
       </View>
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',backgroundColor: '#FAD4B3' }}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',backgroundColor: '#FAD4B3', paddingVertical:10 }}>
       <TouchableOpacity
           style={{
             borderRadius: 40,
