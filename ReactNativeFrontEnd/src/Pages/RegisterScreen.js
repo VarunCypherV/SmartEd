@@ -70,31 +70,31 @@ const RegisterScreen = (props) => {
       <View style={styles.imagesParent}>
         <View style={[styles.image, styles.image1]}>
           <Image
-            source={require('./Assests/loginImages/p5.png')}
+            source={require('../Assests/loginImages/p5.png')}
             style={styles.image}
           />
         </View>
         <View style={[styles.image, styles.image2]}>
           <Image
-            source={require('./Assests/loginImages/p9.png')}
+            source={require('../Assests/loginImages/p9.png')}
             style={styles.image}
           />
         </View>
         <View style={styles.image}>
           <Image
-            source={require('./Assests/loginImages/p4.png')}
+            source={require('../Assests/loginImages/p4.png')}
             style={styles.image}
           />
         </View>
         <View style={[styles.image, styles.image3]}>
           <Image
-            source={require('./Assests/loginImages/p8.png')}
+            source={require('../Assests/loginImages/p8.png')}
             style={styles.image}
           />
         </View>
         <View style={[styles.image, styles.image4]}>
           <Image
-            source={require('./Assests/loginImages/p7.png')}
+            source={require('../Assests/loginImages/p7.png')}
             style={styles.image}
           />
         </View>
@@ -109,7 +109,7 @@ const RegisterScreen = (props) => {
           {/*Username input*/}
           <View style={styles.inputContainer}>
 
-            <Image source={require('./Assests/loginImages/User.png')}></Image>
+            <Image source={require('../Assests/loginImages/User.png')}></Image>
             <TextInput
               label
               style={styles.input}
@@ -122,7 +122,7 @@ const RegisterScreen = (props) => {
           </View>
           <View style={styles.inputContainerDouble}>
             <View style={styles.inputContainer1}>
-              <Image source={require('./Assests/loginImages/Date_range.png')}></Image>
+              <Image source={require('../Assests/loginImages/Date_range.png')}></Image>
               <TextInput style={styles.input}
                 placeholder='DOB'
                 placeholderTextColor={'white'}
