@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  KeyboardAvoidingView
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,19 +15,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const RegisterScreen = (props) => {
 
   const [username, setUserName] = useState('');
+  const [dob, setDOB] = useState('');
+  const [age, setAge] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
 
   const handleRegister = async () => {
-    console.log(JSON.stringify({ username, email, password }))
+    console.log(JSON.stringify({ username, dob, age, phoneNumber, email, password }))
     try {
-      const response = await fetch('http://192.168.0.105:3001/api/users/register', {
+      const response = await fetch('http://192.168.1.13:3001/api/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, email, password }),
+        body: JSON.stringify({ username, dob, age, phoneNumber, email, password }),
       }).then(res => res.json())
         .then(async (data) => {
           try {
@@ -46,92 +50,129 @@ const RegisterScreen = (props) => {
       //   }
       // } catch (error) {
       //   console.error('Error:', error);
-    }catch (error) {
-        console.error('Error:', error);
+    } catch (error) {
+      console.error('Error:', error);
     }
   }
 
 
   return (
-    <View style={styles.parent}>
-      <LinearGradient colors={['#FF4500', '#FF7B1C']} style={styles.container1}>
-        <View style={styles.textContainer}>
-          <Text style={styles.sunsetText}>SmartEducation!</Text>
-        </View>
-        <View style={styles.imagesParent}>
-          <View style={[styles.image, styles.image1]}>
-            <Image
-              source={require('../Assests/loginImages/p5.png')}
-              style={styles.image}
-            />
-          </View>
-          <View style={[styles.image, styles.image2]}>
-            <Image
-              source={require('../Assests/loginImages/p9.png')}
-              style={styles.image}
-            />
-          </View>
-          <View style={styles.image}>
-            <Image
-              source={require('../Assests/loginImages/p4.png')}
-              style={styles.image}
-            />
-          </View>
-          <View style={[styles.image, styles.image3]}>
-            <Image
-              source={require('../Assests/loginImages/p8.png')}
-              style={styles.image}
-            />
-          </View>
-          <View style={[styles.image, styles.image4]}>
-            <Image
-              source={require('../Assests/loginImages/p7.png')}
-              style={styles.image}
-            />
-          </View>
-        </View>
 
+
+    <View style={styles.parent}>
+      <LinearGradient colors={['#FF1654', '#FF5000']} style={styles.container1}>
+
+        <View style={styles.textContainer}>
+          <Text style={styles.sunsetText}>Smart Education</Text>
+
+        </View>
       </LinearGradient>
+      <View style={styles.imagesParent}>
+        <View style={[styles.image, styles.image1]}>
+          <Image
+            source={require('../Assests/loginImages/p5.png')}
+            style={styles.image}
+          />
+        </View>
+        <View style={[styles.image, styles.image2]}>
+          <Image
+            source={require('../Assests/loginImages/p9.png')}
+            style={styles.image}
+          />
+        </View>
+        <View style={styles.image}>
+          <Image
+            source={require('../Assests/loginImages/p4.png')}
+            style={styles.image}
+          />
+        </View>
+        <View style={[styles.image, styles.image3]}>
+          <Image
+            source={require('../Assests/loginImages/p8.png')}
+            style={styles.image}
+          />
+        </View>
+        <View style={[styles.image, styles.image4]}>
+          <Image
+            source={require('../Assests/loginImages/p7.png')}
+            style={styles.image}
+          />
+        </View>
+      </View>
+
+
 
       <View style={styles.container2Wrapper}>
         <View style={styles.container2}>
           <Text style={styles.headerText}>Register</Text>
-          <TextInput
-            label
-            style={styles.input}
-            placeholder="username"
-            placeholderTextColor="#888"
-            onChangeText={(text)=>setUserName(text)}
-          />
-          <TextInput
-            label='email'
-            value={email}
-            style={styles.input}
-            placeholder="email"
-            placeholderTextColor="#888"
-            onChangeText={(text) => setEmail(text)}
-          />
-          {/* <TextInput
-            style={styles.input}
-            placeholder="DOB"
-            placeholderTextColor="#888"
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Phone Number"
-            placeholderTextColor="#888"
-          /> */}
-          <TextInput
-            style={styles.input}
-            placeholder="Password"
-            value={password}
-            placeholderTextColor="#888"
-            secureTextEntry={true}
-            onChangeText={(text) => setPassword(text)}
-          />
+
+          {/*Username input*/}
+          <View style={styles.inputContainer}>
+
+            <Image source={require('../Assests/loginImages/User.png')}></Image>
+            <TextInput
+              label
+              style={styles.input}
+              placeholder="Username"
+              placeholderTextColor="white"
+
+              onChangeText={(text) => setUserName(text)}
+              keyboardType='default'
+            />
+          </View>
+          <View style={styles.inputContainerDouble}>
+            <View style={styles.inputContainer1}>
+              <Image source={require('../Assests/loginImages/Date_range.png')}></Image>
+              <TextInput style={styles.input}
+                placeholder='DOB'
+                placeholderTextColor={'white'}
+                onChangeText={(text) => setDOB(text)}
+                keyboardType='numeric' />
+            </View>
+            <View style={styles.inputContainer1}>
+              <TextInput
+                style={styles.input}
+                placeholder="Age"
+                placeholderTextColor={'white'}
+                onChangeText={(text) => setAge(text)}
+                keyboardType='numeric' />
+            </View>
+          </View>
+
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              placeholder="Phone Number"
+              placeholderTextColor="white"
+              onChangeText={(text) => setPhoneNumber(text)}
+              keyboardType="phone-pad"
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              label='email'
+              value={email}
+              style={styles.input}
+              placeholder="email"
+              placeholderTextColor="#fff"
+              onChangeText={(text) => setEmail(text)}
+            />
+          </View>
+
+
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={[styles.input]}
+              placeholder="Password"
+              value={password}
+              placeholderTextColor="white"
+              secureTextEntry={true}
+              onChangeText={(text) => setPassword(text)}
+            />
+          </View>
           <View style={styles.buttonsparent}>
             <TouchableOpacity style={styles.loginButton}>
-              <Text style={styles.buttonText}>Go Back</Text>
+              <Text style={styles.loginButtonText}>Go Back</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.regButton} onPress={() => handleRegister()}>
               <Text style={styles.buttonText}>Register</Text>
@@ -139,14 +180,16 @@ const RegisterScreen = (props) => {
           </View>
         </View>
       </View>
-    </View>
+    </View >
+
   );
 }
 
 const styles = StyleSheet.create({
   parent: {
     flex: 1,
-    backgroundColor: '#FF7B1C',
+    backgroundColor: '#FF5000'
+
   },
   container1: {
     flex: 3,
@@ -159,7 +202,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container2Wrapper: {
-    flex: 4,
+    flex: 9,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
@@ -174,39 +217,81 @@ const styles = StyleSheet.create({
   },
   sunsetText: {
     color: 'white',
-    fontSize: 30,
+    fontSize: 32,
     fontFamily: 'Monospace',
     fontWeight: 'bold',
   },
   headerText: {
-    color: '#FF7B1C',
+    color: '#FF5000',
     fontSize: 40,
     fontFamily: 'Monospace',
     fontWeight: 'bold',
     marginBottom: 20,
   },
-  input: {
-    width: '100%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 20,
+  inputContainer1: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 100,
+    padding: 0.5,
     marginVertical: 10,
-    padding: 10,
     paddingLeft: 20,
-    backgroundColor: 'white',
+    width: '50%',
+    backgroundColor: '#FF81486b',
+    margin: 2.5,
+
+  },
+
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 100,
+    padding: 0.5,
+    paddingLeft: 20,
+    marginVertical: 10,
+    width: '100%',
+    backgroundColor: '#FF81486b',
+  },
+  inputContainerDouble: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  input: {
+    flex: 1,
+    // width: '100%',
+    // height: 40,
+    // borderColor: 'white',
+    // borderWidth: 1,
+    // borderRadius: 20,
+    // marginVertical: 10,
+    // padding: 10,
+    // paddingLeft: 20,
+    // backgroundColor: '#FF81486b',
+
+  },
+  sameLineInput: {
+    flex: 1,
+    // borderColor: 'white',
+    // borderWidth: 1,
+    // width: '50%',
+    // borderRadius: 20,
+    // paddingLeft: 20,
+    // padding: 10,
+    // backgroundColor: '#FF81486b',
   },
   loginButton: {
-    backgroundColor: '#FF7B1C',
+    borderColor: '#FF7B1C',
     marginLeft: 30,
     marginRight: 10,
     marginTop: 20,
     padding: 10,
     borderRadius: 50,
     flex: 1,
+    borderWidth: 1.5
   },
   regButton: {
-    backgroundColor: '#FF7B1C',
+    backgroundColor: '#FF5000',
     marginLeft: 10,
     marginRight: 40,
     marginTop: 20,
@@ -214,10 +299,16 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     flex: 1,
   },
+  loginButtonText: {
+    color: '#FF7B1C',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
   buttonText: {
     color: 'white',
     textAlign: 'center',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
+
   },
   buttonsparent: {
     flexDirection: 'row',
@@ -229,8 +320,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    maxWidth: 60,
-    maxHeight: 60,
+    maxWidth: 50,
+    maxHeight: 55,
   },
 
   image1: {

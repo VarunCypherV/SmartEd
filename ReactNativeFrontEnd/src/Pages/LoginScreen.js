@@ -50,9 +50,9 @@ const LoginScreen = (props) => {
 
   return (
     <View style={styles.parent}>
-      <LinearGradient colors={['#FF4500', '#FF7B1C']} style={styles.container1}>
+      <LinearGradient colors={['#FF1654', '#FF5000']} style={styles.container1}>
         <View style={styles.textContainer}>
-          <Text style={styles.sunsetText}>SmartEducation!</Text>
+          <Text style={styles.sunsetText}>Smart Education!</Text>
         </View>
         <View style={styles.imagesParent}>
           <View style={[styles.image, styles.image1]}>
@@ -92,22 +92,27 @@ const LoginScreen = (props) => {
       <View style={styles.container2Wrapper}>
         <View style={styles.container2}>
           <Text style={styles.headerText}>Login</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Username or Email"
-            placeholderTextColor="#888"
-            label='usernameOrEmail'
-            value={usernameOrEmail}
-            onChangeText={(text) => setUsernameOrEmail(text)}
-          />
-          <TextInput
-            style={styles.input}
-            label='password'
-            onChangeText={(text) => setPassword(text)}
-            placeholder="Password"
-            placeholderTextColor="#888"
-            secureTextEntry={true}
-          />
+          <View style={styles.inputContainer}>
+            <Image source={require('../Assests/loginImages/User.png')} />
+            <TextInput
+              style={styles.input}
+              placeholder="Username or Email"
+              placeholderTextColor="white"
+              label='usernameOrEmail'
+              value={usernameOrEmail}
+              onChangeText={(text) => setUsernameOrEmail(text)}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.input}
+              label='password'
+              onChangeText={(text) => setPassword(text)}
+              placeholder="Password"
+              placeholderTextColor="white"
+              secureTextEntry={true}
+            />
+          </View>
           <View style={styles.buttonsparent}>
             <TouchableOpacity style={styles.loginButton}>
               <Text style={styles.buttonText} onPress={() => handleLogin(props)}>Login</Text>
@@ -125,7 +130,7 @@ const LoginScreen = (props) => {
 const styles = StyleSheet.create({
   parent: {
     flex: 1,
-    backgroundColor: '#FF7B1C',
+    backgroundColor: '#FF5000',
   },
   container1: {
     flex: 3,
@@ -158,25 +163,34 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   headerText: {
-    color: '#FF7B1C',
+    color: '#FF5000',
     fontSize: 40,
     fontFamily: 'Monospace',
     fontWeight: 'bold',
     marginBottom: 20,
   },
-  input: {
-    width: '100%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 20,
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 100,
+    padding: 0.5,
+    paddingLeft: 15,
     marginVertical: 10,
-    padding: 10,
-    paddingLeft: 20,
-    backgroundColor: 'white',
+    width: '100%',
+    backgroundColor: '#FF81486b'
+  },
+  input: {
+    flex: 1
+    // width: '100%',
+    // height: 40,
+    // borderRadius: 20,
+    // padding: 10,
+    // paddingLeft: 20,
+    // backgroundColor: 'white',
   },
   loginButton: {
-    backgroundColor: '#FF7B1C',
+    backgroundColor: '#FF5000',
     marginLeft: 30,
     marginRight: 10,
     marginTop: 20,
@@ -185,7 +199,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   regButton: {
-    backgroundColor: '#FF7B1C',
+    backgroundColor: '#FF5000',
     marginLeft: 10,
     marginRight: 40,
     marginTop: 20,
@@ -208,8 +222,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    maxWidth: 60,
-    maxHeight: 60,
+    maxWidth: 50,
+    maxHeight: 55,
   },
 
   image1: {
