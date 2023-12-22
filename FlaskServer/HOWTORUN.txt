@@ -1,0 +1,12 @@
+python venv VM_Server
+VM_Server\Scripts\activate : Spin Up the Venv
+Then do Flask run to start the server , (app.py is the entry point file FYI)
+
+go to localhost:5000 (as of now) and check the api docs , hit the api to run ML Models
+
+
+choco install ffmpeg
+pip install git+https://github.com/openai/whisper.git 
+https://pypi.org/project/openai-whisper/
+
+py Translate.py -l -m -p ./ball2.mp3
